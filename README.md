@@ -1,3 +1,18 @@
+# Описание/исправление ошибок
+
+
+| Какие ошибки? | Как вы нашли? / Почему они возникли? | Какие способы их исправления существуют? |
+| --- | --- | --- |
+| Ошибка<br>Cannot GET / на главной странице<br> | Уведомление в терминале<br>WARNING in configuration<br>The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.        <br>You can also set it to 'none' to disable any default behavior. <br>Learn more: https://webpack.js.org/configuration/mode/<br> | webpack.config.js<br>добавить строчку<br>mode: 'development'<br> |
+| Ошибка в файле<br>src\application\data.ts(46,14)<br> | Уведомление в терминале<br>Type '"update"' is not comparable to type '"next" "prev" "restart" "message" "theme" "timer"'.<br> | добавить тип Action<br>ReturnType<typeof actionUpdate><br>в файле src\application\actions.ts<br> |
+| При переключении на тёмную тему исчезала кнопки переключения на светлую тему<br> | Некорректно была написана функция setElementTheme (прежний css-класс темы не удалялся)<br> |Исправить функцию с учетом добавления условий для смены темы<br> |
+| При клике на кнопку вправо не срабатывала функция “next”<br> | Поиск по коду<br> | src\index.ts<br>Замена диспатча функции dispatch(actionPrev())); на dispatch(actionNext()));<br><br>src\application\selectors.ts<br>В функции createCurrentIndexSelector удалена строчка mergeMapTo(EMPTY)<br> |
+| Отсутствие progress bars сверху слайдов<br> | Допущена ошибка в стилях<br> | index.css <br>.slide-progress-value {<br>    height: 4<br>}<br>(добавлены px)<br> |
+| После 6-ого слайда автоматическая прокрутка не выполнялась<br> | Поиск коду<br> | src\application\effects.ts<br>В timerEffect$.pipe() удалена строка take(5)<br> |
+| Не добавлялись статические файлы в коммит<br> | Проверка .gitignore<br> | Удалена строка public из .gitignore<br> |
+| Не срабатывали кнопки переключения внутри слайдов<br> | При нажатии на svg элемент не срабатывало событие <br>Не изменялся цвет на активной кнопке <br> | Добавлен абсолютно позиционированный div над svg элементом<br>Изменена функция update в файле src\application\data.ts, таким образом, чтобы при отправке определенных параметров происходило одновременное изменение данных плеера и слайда.<br>Потребовалось отключить настройку в tsconfig.js - "noImplicitAny": true<br><br>Альтернативный способ: можно было создать дополнительный div вокруг элемента и перенести в него data-action<br> |
+
+
 # Задание 3. Найдите ошибки
 
 В этом репозитории находятся материалы тестового задания «Найдите ошибки» для [17-й Школы разработки интерфейсов](https://yandex.ru/promo/academy/shri) (лето-2021, Москва).
